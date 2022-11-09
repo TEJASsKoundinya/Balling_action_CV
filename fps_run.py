@@ -354,11 +354,11 @@ def movenet(input_image):
 
 if __name__ == '__main__':
 
-  cap = cv2.VideoCapture('allone.mp4')
+  cap = cv2.VideoCapture('input.mp4')
   frame_width = int(cap.get(3))
   frame_height = int(cap.get(4))
   size = (frame_width, frame_height)
-  result = cv2.VideoWriter('tryitoutthis4.avi', cv2.VideoWriter_fourcc(*'MJPG'),10, size)
+  result = cv2.VideoWriter('output.avi', cv2.VideoWriter_fourcc(*'MJPG'),10, size)
   fps = 0
   count = 0
   while True:
