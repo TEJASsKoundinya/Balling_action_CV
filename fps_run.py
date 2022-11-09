@@ -112,6 +112,7 @@ def drawPred1(frame, classId, conf, left, top, right, bottom, classes, str_predi
     #cv2_imshow(frame)
     return frame
 
+
 def postprocess(frame_org, outs, confThreshold, classes, nmsThreshold, black_img):
     frameHeight = frame_org.shape[0]
     frameWidth = frame_org.shape[1]
@@ -154,9 +155,11 @@ def postprocess(frame_org, outs, confThreshold, classes, nmsThreshold, black_img
         if if_predict:
           #print('RESULT')
           frame_ = frame_org[top:top + height, left:left + width]
+          #print(frame_.shape)
           black_img = np.zeros(frame_.shape)
           input_image = tf.expand_dims(frame_, axis=0)
-          input_image = tf.image.resize_with_pad(input_image, input_size, input_size)
+          input_image = tf.image.resize_with_pad(
+              input_image, input_size, input_size)
           #print(input_image.shape)
 
         # Run model inference.
@@ -165,48 +168,33 @@ def postprocess(frame_org, outs, confThreshold, classes, nmsThreshold, black_img
         # Visualize the predictions with image.
           display_image = tf.expand_dims(black_img, axis=0)
           display_image = tf.cast(tf.image.resize_with_pad(
-          display_image, 180, 180), dtype=tf.int32)
+              display_image, 180, 180), dtype=tf.int32)
           output_overlay = draw_prediction_on_image(
-          np.squeeze(display_image.numpy(), axis=0), keypoints_with_scores)
+              np.squeeze(display_image.numpy(), axis=0), keypoints_with_scores)
           img_height = 180
           img_width = 180
 
           #cv2_imshow(frame_)
           #cv2_imshow(output_overlay)
-          cv2.imwrite('output/img.png',output_overlay)
-          img = tf.keras.utils.load_img('output/img.png', target_size=(img_height, img_width))
+          cv2.imwrite('/content/output/img.png', output_overlay)
+          img = tf.keras.utils.load_img(
+              '/content/output/img.png', target_size=(img_height, img_width))
           img_array = tf.keras.utils.img_to_array(img)
-          img_array = tf.expand_dims(img_array, 0) # Create a batch
+          img_array = tf.expand_dims(img_array, 0)  # Create a batch
 
           predictions = model1.predict(img_array)
           score = tf.nn.softmax(predictions[0])
+          class_names = ['bowling', 'non-bowling']
+          point = round(np.max(score)*100, 2)
 
-          point = round(np.max(score)*100,2)
-          class_action=class_names[np.argmax(score)]
-          print(class_action, confidences[i])
-          if (class_action == 'bowling'):
-              if (point>70):
-                  str_prediction = class_action
-                  frame_org = drawPred(frame_org,classIds[i], confidences[i], left , top, left + width, top + height,classes,str_prediction)
-              else:
-                  frame_org = drawPred(frame_org,classIds[i], confidences[i], left , top, left + width, top + height,classes,'NON')
-          elif (class_action == 'Umpire'):
-             if (point>70):
-                 str_prediction = class_action
-                 frame_org = drawPred(frame_org,classIds[i], confidences[i], left , top, left + width, top + height,classes,str_prediction)
-             else:
-                 frame_org = drawPred(frame_org,classIds[i], confidences[i], left , top, left + width, top + height,classes,'NON')
-          elif (class_action == 'keeper'):
-            if (point>70):
-                str_prediction = class_action
-                frame_org = drawPred(frame_org,classIds[i], confidences[i], left , top, left + width, top + height,classes,str_prediction)
-            else:
-                frame_org = drawPred(frame_org,classIds[i], confidences[i], left , top, left + width, top + height,classes,'NON')
+          str_prediction = class_names[np.argmax(score)]
 
-          else:
-              str_prediction = class_action
-              frame_org = drawPred(frame_org,classIds[i], confidences[i], left , top, left + width, top + height,classes,'NON')
+          print(point, str_prediction)
+          if (point >= 85 and str_prediction == 'bowling'):
+            frame_org = drawPred(
+                frame_org, classIds[i], confidences[i], left, top, left + width, top + height, classes, str_prediction)
 
+          #print("This image most likely belongs to {} with a {:.2f} percent confidence.".format(class_names[np.argmax(score)], 100 * np.max(score)))
 
     return frame_org
     # return black_img , frame_org
@@ -354,11 +342,11 @@ def movenet(input_image):
 
 if __name__ == '__main__':
 
-  cap = cv2.VideoCapture('input.mp4')
+  cap = cv2.VideoCapture('allone.mp4')
   frame_width = int(cap.get(3))
   frame_height = int(cap.get(4))
   size = (frame_width, frame_height)
-  result = cv2.VideoWriter('output.avi', cv2.VideoWriter_fourcc(*'MJPG'),10, size)
+  result = cv2.VideoWriter('tryitoutthis4.avi', cv2.VideoWriter_fourcc(*'MJPG'),10, size)
   fps = 0
   count = 0
   while True:
