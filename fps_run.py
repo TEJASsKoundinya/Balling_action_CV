@@ -176,9 +176,9 @@ def postprocess(frame_org, outs, confThreshold, classes, nmsThreshold, black_img
 
           #cv2_imshow(frame_)
           #cv2_imshow(output_overlay)
-          cv2.imwrite('/content/output/img.png', output_overlay)
+          cv2.imwrite('output/img.png', output_overlay)
           img = tf.keras.utils.load_img(
-              '/content/output/img.png', target_size=(img_height, img_width))
+              'output/img.png', target_size=(img_height, img_width))
           img_array = tf.keras.utils.img_to_array(img)
           img_array = tf.expand_dims(img_array, 0)  # Create a batch
 
