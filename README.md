@@ -10,16 +10,12 @@ Protocol for execution
 - download Yolo v3 from above link and place it inside Balling_action_cv
 - pip install -r requirements.txt
 - in line 357 for fps_run provide the input file Video
-- python run.py
+- python fps-run.py
 
-## processed input video
+## processed input
 
-
-https://user-images.githubusercontent.com/77600063/201018160-aa7b1083-e55d-41e9-be90-4cd81f0e7852.mp4
-
+https://user-images.githubusercontent.com/77600063/201019539-7c871247-5768-472f-8f3c-a11f9b401ec4.mp4
 
 
-https://user-images.githubusercontent.com/77600063/201018140-21a49d86-2a66-4470-bc8b-a4f534ff09d3.mp4
-
-
+https://user-images.githubusercontent.com/77600063/201019508-298f9ded-2c12-4ce1-8d39-3d7514baf486.mp4
 
