@@ -12,20 +12,14 @@ Protocol for execution
 - in line 357 for fps_run provide the input file Video
 - python fps_run.py
 
-## Input video
+## processed input video
+
+
+https://user-images.githubusercontent.com/77600063/201018160-aa7b1083-e55d-41e9-be90-4cd81f0e7852.mp4
 
 
 
-https://user-images.githubusercontent.com/77600063/200770843-cb339f67-a536-4c33-8e55-0455e8454617.mp4
-
-
-
-
-## output video
-
-
-
-https://user-images.githubusercontent.com/77600063/200771403-8e36d254-0168-406f-aeb3-a74aace7857d.mp4
+https://user-images.githubusercontent.com/77600063/201018140-21a49d86-2a66-4470-bc8b-a4f534ff09d3.mp4
 
 
 
